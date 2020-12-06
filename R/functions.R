@@ -1,6 +1,6 @@
 #`Plots a firm's cost curves given its total cost function in terms of quantity supplied.`
 #' @export
-Cost_curves <- function(TC_formula="(q^2) - 10*q + 100",qmin = 0,qmax = 25) {
+Cost_curves <- function(TC_formula="(q^2) + 100",qmin = 0,qmax = 25) {
   TC_formula <- parse(text = TC_formula)
   MC_formula <- D(parse(text =TC_formula),"q")
   z = 0
