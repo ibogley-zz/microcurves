@@ -16,3 +16,15 @@ Cost_curves <- function(TC_formula="(q^2) + 100",qmin = 0,qmax = 25) {
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = .5),plot.subtitle = ggplot2::element_text(hjust = .5)) +
     ggplot2::geom_hline(yintercept = 0) + ggplot2::geom_vline(xintercept = 0)
 }
+
+#`Plots a set of indifference curves given a utility function of 2 variables`
+#' @export
+Utility_curves <- function(utility_formula="(x*y)^.5",xmin=1,xmax=100,ymin=1,ymax=100) {
+  utility_formula <- parse(text = utility_formula)
+  data <- dplyr::mutate(expand.grid(data.frame(
+    x = seq(from = xmin, to = xmax,by = .01),
+    y = seq(from = ymin, to = ymax,by = .01)
+  )), u = round(eval(utility_formula),2))
+  ggplot2::ggplot(data = dplyr::filter(data,u %in% data$u[c(250,500,750,1000)])) + ggplot2::geom_line(ggplot2::aes(x = x, y = y, group = u)) + ggplot2::geom_hline(yintercept = 0) + ggplot2::geom_vline(xintercept = 0) + ggplot2::labs(title = "Indifference Curves",subtitle = paste(utility_formula)) + ggplot2::theme(plot.title = ggplot2::element_text(hjust = .5),plot.subtitle = ggplot2::element_text(hjust=.5))
+}
+
